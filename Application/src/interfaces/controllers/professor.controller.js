@@ -143,17 +143,7 @@ class ProfessorController {
     return data;
   }
 
-  async register(
-    First_Name,
-    Last_Name,
-    Email,
-    DNI,
-    Mobile_Phone,
-    CityID,
-    Department,
-    Password,
-    idDNI
-  ) {
+  async register(obj) {
     const instancePersonRepository = new PersonRepository(personDb);
     const instancePersonService = new PersonService(instancePersonRepository);
 
@@ -165,25 +155,14 @@ class ProfessorController {
     const instanceLoginRepository = new LoginRepository(loginDb);
     const instanceLoginService = new LoginService(instanceLoginRepository);
 
-    const result = instancePersonService.create({
-      First_Name,
-      Last_Name,
-      Email,
-      DNI,
-      Mobile_Phone,
-      CityID,
-    });
+    const result = instancePersonService.create(obj);
 
     const dataId = await result.catch((err) => {
       console.log("Professor Controller Error", err);
       return null;
     });
 
-    const resultProfessor = instanceProfessorService.create({
-      Department,
-      dataId,
-      idDNI,
-    });
+    const resultProfessor = instanceProfessorService.create(obj);
 
     const dataProfessor = await resultProfessor.catch((err) => {
       console.log("Professor Controller Error Professor", err);

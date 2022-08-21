@@ -24,7 +24,7 @@ const InscriptionService = require("../../aplication/services/inscription.servic
 const InscriptionRepository = require("../../domain/repository/inscription.repository");
 
 class StudentController {
-  async register(
+  async register({
     First_Name,
     Last_Name,
     Email,
@@ -37,7 +37,7 @@ class StudentController {
     Faculty,
     Password,
     IMEI
-  ) {
+  }) {
     const result = personDb.create(
       First_Name,
       Last_Name,

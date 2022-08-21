@@ -153,15 +153,15 @@ router.post("/registercheck", async (req, res) => {
 
   let obj = new Object();
 
-  obj.nombre = req.body.nombre,
-  obj.apellidos = req.body.apellidos,
-  obj.correo = req.body.correo,
-  obj.dni = req.body.dni,
-  obj.del = req.body.cel,
-  obj.ciudad = req.body.ciudad,
-  obj.dep = req.body.dep,
-  obj.contra = req.body.contra,
-  obj.iddni = req.body.iddni
+  obj.First_Name = req.body.nombre
+  obj.Last_Name = req.body.apellidos
+  obj.Email = req.body.correo
+  obj.DNI = req.body.dni
+  obj.Mobile_Phone = req.body.cel
+  obj.CityID = req.body.ciudad
+  obj.Department = req.body.dep
+  obj.Password = req.body.contra
+  obj.idDNI = req.body.iddni
   
   const professor = await professorDb.register(obj);
   if (professor.insertId > 0) res.redirect("/login?msg=ok");

@@ -23,20 +23,22 @@ router.get("/alumnos/:cui", async (req, res) => {
 });
 router.post("/alumnos/registrar", async (req, res) => {
   console.log("post", req.body);
-  const info = await studentDb.register(
-    req.body.First_Name,
-    req.body.Last_Name,
-    req.body.Email,
-    req.body.DNI,
-    req.body.Home_Phone,
-    req.body.Mobile_Phone,
-    req.body.CityID,
-    req.body.StudentID,
-    req.body.Career,
-    req.body.Faculty,
-    req.body.Password,
-    req.body.IMEI
-  );
+  let obj = new object();
+
+  obj.First_Name=First_Name
+  obj.Last_Name=Last_Name
+  obj.Email=Email
+  obj.DNI=DNI
+  obj.Home_Phone=Home_Phone
+  obj.Mobile_Phone=Mobile_Phone
+  obj.CityID=CityId
+  obj.StudentID=StudentID
+  obj.Career=Career
+  obj.Faculty=Faculty
+  obj.Password=Password
+  obj.IMEI =IMEI
+    
+  const info = await studentDb.register(obj);
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(info));
 });
