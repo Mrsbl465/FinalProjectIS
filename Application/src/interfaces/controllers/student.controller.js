@@ -153,8 +153,6 @@ class StudentController {
         return null;
       });
 
-    console.log("------------------------------DOLOR-> ", data);
-
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
     const dataCourseUpdate = await instanceCourseService

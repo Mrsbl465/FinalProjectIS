@@ -9,16 +9,14 @@ class InscriptionService extends BaseService {
   async deleteInscription(id, StudentId) {
     if (!id || !StudentId) {
       const error = new Error();
-      error.status = 400;
-      error.message = "Parametro id debe ser enviado";
+      error.status = 100;
+      error.message = "El parámetro ID debe ser enviado";
       throw error;
     }
-
     const entity = await this.repository.deleteInscription(id, StudentId);
-
     if (!entity) {
       const error = new Error();
-      error.status = 400;
+      error.status = 500;
       error.message = "Entidad no encontrada";
       throw error;
     }

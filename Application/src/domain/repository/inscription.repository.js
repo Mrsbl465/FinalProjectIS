@@ -6,7 +6,6 @@ class InscriptionRepository extends BaseRepository {
   }
 
   async deleteInscription(id, StudentId) {
-    console.log("si entre :c -----------------------> ");
     return this.model.deleteInscription(id, StudentId);
   }
 }
