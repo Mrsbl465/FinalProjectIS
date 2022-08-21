@@ -94,7 +94,7 @@ class ProfessorController {
     return data;
   }
 
-  async NuevoHorario(Day, Start, Finish, CourseID) {
+  async createSchedule(Day, Start, Finish, CourseID) {
     const instanceSheduleRepository = new SheduleRepository(sheduleDb);
     const instanceSheduleService = new SheduleService(
       instanceSheduleRepository
@@ -112,7 +112,7 @@ class ProfessorController {
     return data;
   }
 
-  async GetHorario(CourseID) {
+  async getSchedule(CourseID) {
     const instanceSheduleRepository = new SheduleRepository(sheduleDb);
     const instanceSheduleService = new SheduleService(
       instanceSheduleRepository
@@ -125,7 +125,7 @@ class ProfessorController {
     return data;
   }
 
-  async NuevoCourse(Course_Name, SectionID, TypeID, ProfessorID, Semestre) {
+  async createCourse(Course_Name, SectionID, TypeID, ProfessorID, Semestre) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
     const result = instanceCourseService.create({

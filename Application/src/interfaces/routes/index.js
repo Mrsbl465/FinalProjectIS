@@ -16,7 +16,7 @@ router.get("/register", async function (req, res, next) {
 router.post("/checkcrearcurso", async function (req, res, next) {
   const token = req.cookies.tokenUser;
   console.log("token", token);
-  const course = await professorDb.NuevoCourse(
+  const course = await professorDb.createCourse(
     req.body.nombre,
     req.body.seccion,
     req.body.tipo,
@@ -61,7 +61,7 @@ router.get("/crearcurso", async function (req, res, next) {
 });
 
 router.get("/verhorario/:id/:name", async function (req, res, next) {
-  const response = await professorDb.GetHorario(req.params.id);
+  const response = await professorDb.getSchedule(req.params.id);
   console.log("horarios " + req.params.id, response);
   res.render("horarios", {
     id: req.params.id,
@@ -71,13 +71,13 @@ router.get("/verhorario/:id/:name", async function (req, res, next) {
 });
 
 router.post("/crearhorariochecked/:id/:name", async function (req, res, next) {
-  const response = await professorDb.NuevoHorario(
+  const response = await professorDb.createSchedule(
     req.body.dia,
     req.body.hour1,
     req.body.hour2,
     req.params.id
   );
-  console.log("Insetando horario ", response);
+  console.log("Insertando horario ", response);
   res.redirect("/verhorario/" + req.params.id + "/" + req.params.name);
 });
 
