@@ -19,7 +19,7 @@ Constraints:
 
 ```javascript
 async getAll() {
-  const con = connectionDb.promise();
+  const connection = connectionDb.promise();
   const data = await con.query(
     "SELECT * FROM student INNER JOIN person ON student.PersonID = person.PersonID INNER JOIN city ON person.CityID = city.CityID"
   );
