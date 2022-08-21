@@ -4,6 +4,59 @@
 
 # Práctica 09: Estilos de Programación
 
+## Persistent Tables
+
+Constraints:
+
+- The input data of the problem is modeled as entities with relations between them
+
+- The data is placed in tables, with columns potentially cross-referencing data in other tables
+
+- Existence of a relational query engine
+
+- The problem is solved by issuing queries over the tabular data
+
+
+```javascript
+async getAll() {
+  const con = connectionDb.promise();
+  const data = await con.query(
+    "SELECT * FROM student INNER JOIN person ON student.PersonID = person.PersonID INNER JOIN city ON person.CityID = city.CityID"
+  );
+  return data[0];
+}
+```
+
+## Declared Intentions
+
+Constraints:
+
+- Existence of a run-time typechecker
+
+- Procedures and functions declare what types of arguments they expect
+
+- If callers send arguments of types that are't expected, the
+  procedures/functions are not executed
+  
+```javascript
+  async deleteInscription(id, StudentId) {
+    if (!id || !StudentId) {
+      const error = new Error();
+      error.status = 100;
+      error.message = "El parámetro ID debe ser enviado";
+      throw error;
+    }
+    const entity = await this.repository.deleteInscription(id, StudentId);
+    if (!entity) {
+      const error = new Error();
+      error.status = 500;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+```
+
 ## Things
 Constraints:
 - The larger problem is decomposed into 'things' that make sense for the problem domain.
