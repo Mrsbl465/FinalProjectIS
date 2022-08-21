@@ -18,6 +18,13 @@ Constraints:
 
 
 ```javascript
+async findByName(city) {
+  const con = connectionDb.promise();
+  const data = await con.query("SELECT * FROM city WHERE City_Name = ?", [
+    city,
+  ]);
+  return data[0];
+}
 async getAll() {
   const connection = connectionDb.promise();
   const data = await con.query(
