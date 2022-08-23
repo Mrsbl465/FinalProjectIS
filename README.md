@@ -160,3 +160,163 @@ async deleteCourse(id) {
 
 # Práctica 11: Principios SOLID
 
+## Liskov Substitution Principle
+Cuando una Clase hija no puede realizar las mismas acciones que su Clase padre, esto puede causar errores.
+
+Si tienes una clase y creas otra clase a partir de ella, ésta se convierte en padre y la nueva clase en hijo. La clase hija debe ser capaz de hacer todo lo que la clase padre puede hacer. Este proceso se llama Herencia.
+
+La clase hija debe ser capaz de procesar las mismas peticiones y entregar el mismo resultado que la clase padre o puede entregar un resultado que sea del mismo tipo.
+
+La imagen muestra que la clase padre entrega café (puede ser cualquier tipo de café). Es aceptable que la Clase hija entregue Cappucino porque es un tipo específico de Café, pero NO es aceptable que entregue Agua.
+
+Si la Clase hija no cumple con estos requisitos, significa que la Clase hija ha cambiado completamente y viola este principio.
+
+### Objetivo
+
+Este principio tiene como objetivo reforzar la consistencia para que la Clase padre o su Clase hija puedan ser utilizadas de la misma manera sin ningún error.
+
+```javascript
+// PARENT
+
+class BaseService {
+  constructor(Repository) {
+    this.repository = Repository;
+  }
+  async get(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.get(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async getByName(name) {
+    if (!name) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro name debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.getByName(name);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async getAll() {
+    const entity = await this.repository.getAll();
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async create(data) {
+    const entity = await this.repository.create(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async update(data) {
+    const entity = await this.repository.update(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async delete(id) {
+    const entity = await this.repository.delete(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+}
+
+module.exports = BaseService;
+
+// CHILD
+
+const BaseService = require("./base.service");
+
+class CityService extends BaseService {
+  constructor(CityRepository) {
+    super(CityRepository);
+    this._cityRepository = CityRepository;
+  }
+}
+
+module.exports = CityService;
+
+
+
+ ```
+
+## DIP - Dependency inversion principle
+
+En primer lugar, hay que definir los términos utilizados aquí de forma más sencilla
+
+**Módulo(o clase) de alto nivel:** Clase que ejecuta una acción con una herramienta.
+
+**Módulo (o Clase) de bajo nivel:** La herramienta que se necesita para ejecutar la acción
+
+**Abstracción:** Representa una interfaz que conecta las dos Clases.
+
+**Detalles:** Cómo funciona la herramienta
+
+Este principio dice que una Clase no debe fusionarse con la herramienta que utiliza para ejecutar una acción. Más bien, debe fusionarse con la interfaz que permitirá a la herramienta conectarse a la Clase.
+
+También dice que tanto la clase como la interfaz no deben saber cómo funciona la herramienta. Sin embargo, la herramienta debe cumplir con la especificación de la interfaz.
+
+### Objetivo
+
+Este principio pretende reducir la dependencia de una Clase de alto nivel con respecto a la Clase de bajo nivel mediante la introducción de una interfaz.
+
+```javascript
+
+ ```
+## OCP - Open/closed principle
+
+Cambiar el comportamiento actual de una Clase afectará a todos los sistemas que utilicen esa Clase.
+Si quiere que la Clase realice más funciones, lo ideal es añadir a las funciones que ya existen NO cambiarlas.
+
+### Objetivo
+
+Este principio pretende ampliar el comportamiento de una Clase sin cambiar el comportamiento existente de esa Clase. Esto es para evitar que se produzcan errores dondequiera que se utilice la Clase.
+
+
+## ISP - Interface segregation principle
+
+
+
+
