@@ -278,8 +278,6 @@ class CityService extends BaseService {
 
 module.exports = CityService;
 
-
-
  ```
 
 ## DIP - Dependency inversion principle
@@ -302,7 +300,38 @@ También dice que tanto la clase como la interfaz no deben saber cómo funciona 
 
 Este principio pretende reducir la dependencia de una Clase de alto nivel con respecto a la Clase de bajo nivel mediante la introducción de una interfaz.
 
+
+**El archivo professor.repository.js (repositorio) es una clase intermedia entre el professor.model.js (modelo) y el professor.service.js (servicio).**
+
 ```javascript
+
+// professor.repository.js
+
+const BaseRepository = require("./base.repository");
+
+class ProfessorRepository extends BaseRepository {
+  constructor(ProfessorDb) {
+    super(ProfessorDb);
+  }
+  async getAllWithoutPagination() {
+    return this.model.find();
+  }
+}
+
+module.exports = ProfessorRepository;
+
+// professor.service.js
+
+const BaseService = require("./base.service");
+
+class ProfessorService extends BaseService {
+  constructor(ProfessorRepository) {
+    super(ProfessorRepository);
+    this._ProfessorRepository = ProfessorRepository;
+  }
+}
+
+module.exports = ProfessorService;
 
  ```
 ## OCP - Open/closed principle
@@ -315,8 +344,79 @@ Si quiere que la Clase realice más funciones, lo ideal es añadir a las funcion
 Este principio pretende ampliar el comportamiento de una Clase sin cambiar el comportamiento existente de esa Clase. Esto es para evitar que se produzcan errores dondequiera que se utilice la Clase.
 
 
-## ISP - Interface segregation principle
+**En el código se puede observar que course.service.js extiende de base.service.js y añade más funciones.**
 
+```javascript
 
+// EXTENSION DE FUNCIONES
 
+const BaseService = require("./base.service");
+
+class CourseService extends BaseService {
+  constructor(CourseRepository) {
+    super(CourseRepository);
+    this.CourseRepository = CourseRepository;
+  }
+
+  async findByIdProfessor(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Email or password missing";
+      throw error;
+    }
+
+    const entity = await this.repository.findByIdProfessor(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Failed authentication";
+      throw error;
+    }
+    return entity;
+  }
+
+  async updateCantEstIn(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.updateCantEstIn(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async updateCantEstDe(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.updateCantEstDe(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+}
+
+module.exports = CourseService;
+
+ ```
 
